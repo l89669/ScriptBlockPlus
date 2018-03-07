@@ -37,6 +37,7 @@ public class Utils {
 	private static Boolean isCB19orLaterCache;
 	private static Boolean isCB110orLaterCache;
 	private static Boolean isCB112orLaterCache;
+	private static Boolean isCauldronCache;
 
 	public static String getServerVersion() {
 		if (serverVersion == null) {
@@ -93,6 +94,17 @@ public class Utils {
 			isCB112orLaterCache = isUpperVersion(getServerVersion(), "1.12");
 		}
 		return isCB112orLaterCache;
+	}
+	
+	public static boolean isCauldron() {
+		if (isCauldronCache == null) {
+			try {
+				isCauldronCache = Class.forName("net.minecraftforge.cauldron.api.Cauldron") != null;
+			} catch (Exception e) {
+				isCauldronCache = false;
+			}
+		}
+		return isCauldronCache;
 	}
 
 	public static boolean isUpperVersion(String source, String target) {
