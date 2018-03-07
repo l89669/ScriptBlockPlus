@@ -9,15 +9,18 @@ import org.bukkit.block.BlockFace;
 import com.github.yuttyann.scriptblockplus.enums.reflection.PackageType;
 import com.github.yuttyann.scriptblockplus.utils.Utils;
 
-public final class MovingPosition {
+public class MovingPosition {
 
-	private class BlockPos {
+	protected class BlockPos {
 
-		private final int x;
-		private final int y;
-		private final int z;
+		protected int x;
+		protected int y;
+		protected int z;
 
-		private BlockPos(Object rayTrace) throws ReflectiveOperationException {
+		protected BlockPos() {
+		}
+
+		protected BlockPos(Object rayTrace) throws ReflectiveOperationException {
 			if (Utils.isCB18orLater()) {
 				Object[] nullArray = (Object[]) null;
 				Object blockPosition = PackageType.NMS.invokeMethod(rayTrace, null, "a", nullArray);
@@ -32,9 +35,12 @@ public final class MovingPosition {
 		}
 	}
 
-	private final BlockPos blockPos;
-	private final Vec3D vec3d;
-	private final BlockFace blockFace;
+	protected BlockPos blockPos;
+	protected Vec3D vec3d;
+	protected BlockFace blockFace;
+
+	protected MovingPosition() {
+	}
 
 	MovingPosition(Object rayTrace) throws ReflectiveOperationException {
 		this.blockPos = new BlockPos(rayTrace);

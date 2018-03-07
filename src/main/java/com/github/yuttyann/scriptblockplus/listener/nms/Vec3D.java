@@ -153,7 +153,8 @@ public class Vec3D {
 			return false;
 		} else {
 			Vec3D vec3d = (Vec3D) object;
-			return Double.compare(vec3d.x, this.x) != 0 ? false : (Double.compare(vec3d.y, this.y) != 0 ? false : Double.compare(vec3d.z, this.z) == 0);
+			return Double.compare(vec3d.x, this.x) != 0 ? false
+					: (Double.compare(vec3d.y, this.y) != 0 ? false : Double.compare(vec3d.z, this.z) == 0);
 		}
 	}
 

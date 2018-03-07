@@ -28,7 +28,7 @@ public class ActionBar extends BaseOption {
 			} catch (ClassNotFoundException e) {
 				e.printStackTrace();
 			}
-			PACKET_PARAMS = new Class<?>[]{iChatBaseComponentClass, byteOrChatMessageTypeClass};
+			PACKET_PARAMS = new Class<?>[] { iChatBaseComponentClass, byteOrChatMessageTypeClass };
 		} else {
 			PACKET_PARAMS = null;
 		}
@@ -38,13 +38,13 @@ public class ActionBar extends BaseOption {
 		super("actionbar", "@actionbar:");
 	}
 
-	private class Task extends BukkitRunnable {
+	protected class Task extends BukkitRunnable {
 
 		private int tick;
 		private final int stay;
 		private final String message;
 
-		private Task(int stay, String message) {
+		protected Task(int stay, String message) {
 			this.tick = 0;
 			this.stay = stay + 1;
 			this.message = message;
@@ -72,7 +72,7 @@ public class ActionBar extends BaseOption {
 
 	@Override
 	protected boolean isValid() throws Exception {
-		if (!Utils.isCB18orLater()) {
+		if (!Utils.isCB18orLater() && !Utils.isCauldron()) {
 			throw new UnsupportedOperationException();
 		}
 		String[] array = StringUtils.split(getOptionValue(), "/");
@@ -88,10 +88,14 @@ public class ActionBar extends BaseOption {
 	}
 
 	private void sendActionBar(Player player, String message) throws ReflectiveOperationException {
-		String chatSerializer = NMSHelper.getChatSerializerName();
-		Method a = PackageType.NMS.getMethod(false, chatSerializer, "a", String.class);
-		Object component = a.invoke(null, "{\"text\": \"" + message + "\"}");
-		NMSHelper.sendPacket(player, newPacketPlayOutChat(component));
+		if (Utils.isCauldron()) {
+			ActionBar_Uranium.sendActionBar(player, message);
+		} else {
+			String chatSerializer = NMSHelper.getChatSerializerName();
+			Method a = PackageType.NMS.getMethod(false, chatSerializer, "a", String.class);
+			Object component = a.invoke(null, "{\"text\": \"" + message + "\"}");
+			NMSHelper.sendPacket(player, newPacketPlayOutChat(component));
+		}
 	}
 
 	private Object newPacketPlayOutChat(Object component) throws ReflectiveOperationException {
@@ -101,4 +105,5 @@ public class ActionBar extends BaseOption {
 		}
 		return PackageType.NMS.getConstructor("PacketPlayOutChat", PACKET_PARAMS).newInstance(component, type);
 	}
+
 }

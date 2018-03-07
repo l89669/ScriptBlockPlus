@@ -4,9 +4,12 @@ import org.bukkit.World;
 
 import com.github.yuttyann.scriptblockplus.enums.reflection.PackageType;
 
-public final class NMSWorld {
+public class NMSWorld {
 
-	private final Object world;
+	protected Object world;
+
+	protected NMSWorld() {
+	}
 
 	public NMSWorld(World world) {
 		Object nmsWorld = null;

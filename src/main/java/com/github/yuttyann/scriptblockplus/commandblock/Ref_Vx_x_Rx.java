@@ -9,11 +9,10 @@ import org.bukkit.command.CommandSender;
 import com.github.yuttyann.scriptblockplus.enums.reflection.PackageType;
 import com.github.yuttyann.scriptblockplus.utils.Utils;
 
-final class Ref_Vx_x_Rx implements CommandListener {
+class Ref_Vx_x_Rx implements CommandListener {
 
-	private static final Class<?>[] PARAMS_EXECUTE_COMMAND = {
-		getClass(PackageType.NMS, "ICommandListener"), CommandSender.class, String.class
-	};
+	private static final Class<?>[] PARAMS_EXECUTE_COMMAND = { getClass(PackageType.NMS, "ICommandListener"),
+			CommandSender.class, String.class };
 
 	private static final String CLASS_NAME_1 = "CommandBlockListenerAbstract";
 	private static final String CLASS_NAME_2 = "TileEntityCommand";

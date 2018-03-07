@@ -15,7 +15,7 @@ public class Title extends BaseOption {
 	private static final Class<?>[] TITLE_PARAMS;
 	private static final Class<?>[] TIMES_PARAMS;
 
-	static{
+	static {
 		Class<?> enumTitleActionClass = null;
 		Class<?> iChatBaseComponentClass = null;
 		if (Utils.isCB18orLater()) {
@@ -25,8 +25,9 @@ public class Title extends BaseOption {
 			} catch (ClassNotFoundException e) {
 				e.printStackTrace();
 			}
-			TITLE_PARAMS = new Class<?>[]{enumTitleActionClass, iChatBaseComponentClass};
-			TIMES_PARAMS = new Class<?>[]{enumTitleActionClass, iChatBaseComponentClass, int.class, int.class, int.class};
+			TITLE_PARAMS = new Class<?>[] { enumTitleActionClass, iChatBaseComponentClass };
+			TIMES_PARAMS = new Class<?>[] { enumTitleActionClass, iChatBaseComponentClass, int.class, int.class,
+					int.class };
 		} else {
 			TITLE_PARAMS = null;
 			TIMES_PARAMS = null;
@@ -39,7 +40,7 @@ public class Title extends BaseOption {
 
 	@Override
 	protected boolean isValid() throws Exception {
-		if (!Utils.isCB18orLater()) {
+		if (!Utils.isCB18orLater() && !Utils.isCauldron()) {
 			throw new UnsupportedOperationException();
 		}
 		String[] array = StringUtils.split(getOptionValue(), "/");
@@ -60,9 +61,12 @@ public class Title extends BaseOption {
 		return false;
 	}
 
-	private void sendTitle(Player player, String title, String subtitle, int fadeIn, int stay, int fadeOut) throws ReflectiveOperationException {
+	private void sendTitle(Player player, String title, String subtitle, int fadeIn, int stay, int fadeOut)
+			throws ReflectiveOperationException {
 		if (Utils.isCB112orLater()) {
 			player.sendTitle(title, subtitle, fadeIn, stay, fadeOut);
+		} else if (Utils.isCauldron()) {
+			Title_Uranium.sendTitle(player, title, subtitle, fadeIn, stay, fadeOut);
 		} else {
 			Class<?> enumTitleActionClass = PackageType.NMS.getClass(NMSHelper.getEnumTitleActionName());
 			if (title != null || subtitle != null) {
@@ -89,7 +93,8 @@ public class Title extends BaseOption {
 		}
 	}
 
-	private void setTime(Class<?> titleActionClass, Player player, int fadeIn, int stay, int fadeOut) throws ReflectiveOperationException {
+	private void setTime(Class<?> titleActionClass, Player player, int fadeIn, int stay, int fadeOut)
+			throws ReflectiveOperationException {
 		Constructor<?> packetConstructor = PackageType.NMS.getConstructor("PacketPlayOutTitle", TIMES_PARAMS);
 		Object enumTIMES = NMSHelper.getEnumField(titleActionClass, "TIMES");
 		Object packetPlayOutTimes = packetConstructor.newInstance(enumTIMES, null, fadeIn, stay, fadeOut);

@@ -21,6 +21,7 @@ import com.github.yuttyann.scriptblockplus.event.BlockInteractEvent;
 import com.github.yuttyann.scriptblockplus.listener.nms.MathHelper;
 import com.github.yuttyann.scriptblockplus.listener.nms.MovingPosition;
 import com.github.yuttyann.scriptblockplus.listener.nms.NMSWorld;
+import com.github.yuttyann.scriptblockplus.listener.nms.NMSWorld_cauldron;
 import com.github.yuttyann.scriptblockplus.listener.nms.Vec3D;
 import com.github.yuttyann.scriptblockplus.player.PlayerData;
 import com.github.yuttyann.scriptblockplus.player.SBPlayer;
@@ -55,7 +56,11 @@ public class InteractListener implements Listener {
 		float f6 = f1 * f3;
 		Vec3D vec3d1 = new Vec3D(x, y, z);
 		Vec3D vec3d2 = vec3d1.add(f5 * 4.5D, f4 * 4.5D, f6 * 4.5D);
-		MovingPosition movingPosition = new NMSWorld(player.getWorld()).rayTrace(vec3d1, vec3d2, false);
+		MovingPosition movingPosition;
+		if (Utils.isCauldron())
+			movingPosition = new NMSWorld_cauldron(player.getWorld()).rayTrace(vec3d1, vec3d2, false);
+		else
+			movingPosition = new NMSWorld(player.getWorld()).rayTrace(vec3d1, vec3d2, false);
 		if (movingPosition != null) {
 			Action action = Action.LEFT_CLICK_BLOCK;
 			BlockFace blockFace = movingPosition.getFace();

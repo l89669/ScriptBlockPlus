@@ -8,7 +8,7 @@ import com.github.yuttyann.scriptblockplus.utils.Utils;
 
 public class NMSHelper {
 
-	public static void sendPacket(Player player, Object packet) {
+	protected static void sendPacket(Player player, Object packet) {
 		try {
 			Object handle = player.getClass().getMethod("getHandle").invoke(player);
 			Object connection = handle.getClass().getField("playerConnection").get(handle);
@@ -19,17 +19,17 @@ public class NMSHelper {
 		}
 	}
 
-	public static String getChatSerializerName() {
+	protected static String getChatSerializerName() {
 		String chatSerializer = "ChatSerializer";
 		return Utils.isCB183orLater() ? "IChatBaseComponent$" + chatSerializer : chatSerializer;
 	}
 
-	public static String getEnumTitleActionName() {
+	protected static String getEnumTitleActionName() {
 		String enumTitleAction = "EnumTitleAction";
 		return Utils.isCB183orLater() ? "PacketPlayOutTitle$" + enumTitleAction : enumTitleAction;
 	}
 
-	public static Object getEnumField(Class<?> clazz, String name) {
+	protected static Object getEnumField(Class<?> clazz, String name) {
 		if (clazz == null || StringUtils.isEmpty(name)) {
 			return null;
 		}

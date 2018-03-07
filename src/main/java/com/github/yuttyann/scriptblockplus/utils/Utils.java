@@ -95,7 +95,7 @@ public class Utils {
 		}
 		return isCB112orLaterCache;
 	}
-	
+
 	public static boolean isCauldron() {
 		if (isCauldronCache == null) {
 			try {
@@ -174,7 +174,7 @@ public class Utils {
 
 	public static ItemStack getItemInMainHand(Player player) {
 		PlayerInventory inventory = player.getInventory();
-		if(isCB19orLater()) {
+		if (isCB19orLater()) {
 			return inventory.getItemInMainHand();
 		} else {
 			@SuppressWarnings("deprecation")
@@ -184,14 +184,14 @@ public class Utils {
 	}
 
 	public static ItemStack getItemInOffHand(Player player) {
-		if(isCB19orLater()) {
+		if (isCB19orLater()) {
 			return player.getInventory().getItemInOffHand();
 		}
 		return null;
 	}
 
 	public static ItemStack[] getHandItems(Player player) {
-		return new ItemStack[]{Utils.getItemInMainHand(player), Utils.getItemInOffHand(player)};
+		return new ItemStack[] { Utils.getItemInMainHand(player), Utils.getItemInOffHand(player) };
 	}
 
 	public static String getItemName(ItemStack item, String def) {
